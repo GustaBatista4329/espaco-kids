@@ -1,6 +1,6 @@
-package br.com.gustavo.espacoKids.entity.atividade;
+package br.com.gustavo.espacoKids.domain.entity.atividade;
 
-import br.com.gustavo.espacoKids.entity.aluno.Aluno;
+import br.com.gustavo.espacoKids.domain.entity.aluno.Aluno;
 import jakarta.persistence.*;
 import lombok.*;
 

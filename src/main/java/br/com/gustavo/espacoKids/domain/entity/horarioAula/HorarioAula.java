@@ -1,6 +1,7 @@
-package br.com.gustavo.espacoKids.entity.horarioAula;
+package br.com.gustavo.espacoKids.domain.entity.horarioAula;
 
-import br.com.gustavo.espacoKids.entity.aluno.Aluno;
+import br.com.gustavo.espacoKids.domain.dto.horarioAulaDTO.CadastroHorarioAulaDTO;
+import br.com.gustavo.espacoKids.domain.entity.aluno.Aluno;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,4 +35,12 @@ public class HorarioAula {
     @Column(nullable = false)
     private Boolean ativo = true;
 
+    public HorarioAula(Aluno aluno, CadastroHorarioAulaDTO cadastroHorarioAulaDTO) {
+
+        this.aluno = aluno;
+        this.diaSemana = cadastroHorarioAulaDTO.diaSemana();
+        this.horaInicio = cadastroHorarioAulaDTO.horaInicio();
+        this.horaFim = cadastroHorarioAulaDTO.horaFim();
+
+    }
 }

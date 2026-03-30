@@ -1,6 +1,6 @@
-package br.com.gustavo.espacoKids.dto.usuarioDTO;
+package br.com.gustavo.espacoKids.domain.dto.usuarioDTO;
 
-import br.com.gustavo.espacoKids.entity.usuario.Perfil;
+import br.com.gustavo.espacoKids.domain.entity.usuario.Perfil;
 
 public record CadastroUsuarioDTO (String nome,
                                   String email,

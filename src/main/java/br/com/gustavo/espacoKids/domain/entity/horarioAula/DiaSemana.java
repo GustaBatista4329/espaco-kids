@@ -1,4 +1,4 @@
-package br.com.gustavo.espacoKids.entity.horarioAula;
+package br.com.gustavo.espacoKids.domain.entity.horarioAula;
 
 public enum DiaSemana {
     SEG("Segunda"),

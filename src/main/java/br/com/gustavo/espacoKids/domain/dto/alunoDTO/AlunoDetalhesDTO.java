@@ -1,6 +1,6 @@
-package br.com.gustavo.espacoKids.dto.alunoDTO;
+package br.com.gustavo.espacoKids.domain.dto.alunoDTO;
 
-import br.com.gustavo.espacoKids.entity.aluno.Aluno;
+import br.com.gustavo.espacoKids.domain.entity.aluno.Aluno;
 
 import java.time.LocalDate;
 

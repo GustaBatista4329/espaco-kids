@@ -1,7 +1,7 @@
 package br.com.gustavo.espacoKids.controller;
 
-import br.com.gustavo.espacoKids.dto.responsavelDTO.CadastroResponsavelDTO;
-import br.com.gustavo.espacoKids.entity.responsavel.Responsavel;
+import br.com.gustavo.espacoKids.domain.dto.responsavelDTO.CadastroResponsavelDTO;
+import br.com.gustavo.espacoKids.domain.entity.responsavel.Responsavel;
 import br.com.gustavo.espacoKids.repository.ResponsavelRepository;
 import br.com.gustavo.espacoKids.service.responsavelService.ResponsavelService;
 import lombok.RequiredArgsConstructor;

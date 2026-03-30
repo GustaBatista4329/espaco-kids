@@ -1,8 +1,8 @@
-package br.com.gustavo.espacoKids.entity.responsavel;
+package br.com.gustavo.espacoKids.domain.entity.responsavel;
 
-import br.com.gustavo.espacoKids.dto.responsavelDTO.CadastroResponsavelDTO;
-import br.com.gustavo.espacoKids.entity.aluno.Aluno;
-import br.com.gustavo.espacoKids.entity.usuario.Usuario;
+import br.com.gustavo.espacoKids.domain.dto.responsavelDTO.CadastroResponsavelDTO;
+import br.com.gustavo.espacoKids.domain.entity.aluno.Aluno;
+import br.com.gustavo.espacoKids.domain.entity.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

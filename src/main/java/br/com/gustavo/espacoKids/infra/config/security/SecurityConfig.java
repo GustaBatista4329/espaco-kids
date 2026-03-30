@@ -1,4 +1,4 @@
-package br.com.gustavo.espacoKids.config.security;
+package br.com.gustavo.espacoKids.infra.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

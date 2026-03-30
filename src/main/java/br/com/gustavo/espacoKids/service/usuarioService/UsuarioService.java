@@ -1,8 +1,7 @@
 package br.com.gustavo.espacoKids.service.usuarioService;
 
-import br.com.gustavo.espacoKids.dto.usuarioDTO.CadastroUsuarioDTO;
-import br.com.gustavo.espacoKids.entity.usuario.Perfil;
-import br.com.gustavo.espacoKids.entity.usuario.Usuario;
+import br.com.gustavo.espacoKids.domain.dto.usuarioDTO.CadastroUsuarioDTO;
+import br.com.gustavo.espacoKids.domain.entity.usuario.Usuario;
 import br.com.gustavo.espacoKids.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +15,7 @@ public class UsuarioService {
 
     public CadastroUsuarioDTO cadastroUsuarioDTO(CadastroUsuarioDTO cadastroUsuarioDTO){
         var usuario = new Usuario(cadastroUsuarioDTO);
-        usuario.setSenha_hash(encriptador.encode(usuario.getSenha_hash()));
+        usuario.setSenhaHash(encriptador.encode(usuario.getSenhaHash()));
         repository.save(usuario);
 
         return cadastroUsuarioDTO;

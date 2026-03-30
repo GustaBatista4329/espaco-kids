@@ -1,4 +1,4 @@
-package br.com.gustavo.espacoKids.entity.usuario;
+package br.com.gustavo.espacoKids.domain.entity.usuario;
 
 public enum Perfil {
     PROFESSORA("professora"),

@@ -1,6 +1,6 @@
 package br.com.gustavo.espacoKids.repository;
 
-import br.com.gustavo.espacoKids.entity.aluno.Aluno;
+import br.com.gustavo.espacoKids.domain.entity.aluno.Aluno;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

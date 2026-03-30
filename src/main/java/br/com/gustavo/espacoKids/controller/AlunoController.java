@@ -1,8 +1,8 @@
 package br.com.gustavo.espacoKids.controller;
 
 
-import br.com.gustavo.espacoKids.dto.alunoDTO.AlunoDetalhesDTO;
-import br.com.gustavo.espacoKids.dto.alunoDTO.CadastroAlunoDTO;
+import br.com.gustavo.espacoKids.domain.dto.alunoDTO.AlunoDetalhesDTO;
+import br.com.gustavo.espacoKids.domain.dto.alunoDTO.CadastroAlunoDTO;
 import br.com.gustavo.espacoKids.service.alunoService.AlunoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

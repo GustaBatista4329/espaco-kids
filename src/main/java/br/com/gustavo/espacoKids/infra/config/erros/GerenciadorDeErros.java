@@ -1,4 +1,4 @@
-package br.com.gustavo.espacoKids.config.erros;
+package br.com.gustavo.espacoKids.infra.config.erros;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

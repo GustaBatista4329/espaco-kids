@@ -1,4 +1,4 @@
-package br.com.gustavo.espacoKids.dto.alunoDTO;
+package br.com.gustavo.espacoKids.domain.dto.alunoDTO;
 
 import java.time.LocalDate;
 

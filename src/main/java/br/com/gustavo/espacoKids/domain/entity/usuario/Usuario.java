@@ -1,7 +1,7 @@
-package br.com.gustavo.espacoKids.entity.usuario;
+package br.com.gustavo.espacoKids.domain.entity.usuario;
 
-import br.com.gustavo.espacoKids.dto.usuarioDTO.CadastroUsuarioDTO;
-import br.com.gustavo.espacoKids.entity.responsavel.Responsavel;
+import br.com.gustavo.espacoKids.domain.dto.usuarioDTO.CadastroUsuarioDTO;
+import br.com.gustavo.espacoKids.domain.entity.responsavel.Responsavel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +29,7 @@ public class Usuario {
     private String email;
 
     @Column(nullable = false)
-    private String senha_hash;
+    private String senhaHash;
 
     @Column(nullable = false) @Enumerated(EnumType.STRING)
     private Perfil perfil;
@@ -43,7 +43,7 @@ public class Usuario {
     public Usuario(CadastroUsuarioDTO cadastroUsuarioDTO) {
         this.nome = cadastroUsuarioDTO.nome();
         this.email = cadastroUsuarioDTO.email();
-        this.senha_hash = cadastroUsuarioDTO.senha_hash();
+        this.senhaHash = cadastroUsuarioDTO.senha_hash();
         this.perfil = cadastroUsuarioDTO.perfil();
     }
 }

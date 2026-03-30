@@ -1,8 +1,8 @@
 package br.com.gustavo.espacoKids.service.alunoService;
 
-import br.com.gustavo.espacoKids.dto.alunoDTO.AlunoDetalhesDTO;
-import br.com.gustavo.espacoKids.dto.alunoDTO.CadastroAlunoDTO;
-import br.com.gustavo.espacoKids.entity.aluno.Aluno;
+import br.com.gustavo.espacoKids.domain.dto.alunoDTO.AlunoDetalhesDTO;
+import br.com.gustavo.espacoKids.domain.dto.alunoDTO.CadastroAlunoDTO;
+import br.com.gustavo.espacoKids.domain.entity.aluno.Aluno;
 import br.com.gustavo.espacoKids.repository.AlunoRepository;
 import br.com.gustavo.espacoKids.repository.ResponsavelRepository;
 import lombok.RequiredArgsConstructor;

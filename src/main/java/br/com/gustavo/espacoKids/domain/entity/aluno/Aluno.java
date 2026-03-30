@@ -1,9 +1,9 @@
-package br.com.gustavo.espacoKids.entity.aluno;
+package br.com.gustavo.espacoKids.domain.entity.aluno;
 
-import br.com.gustavo.espacoKids.dto.alunoDTO.CadastroAlunoDTO;
-import br.com.gustavo.espacoKids.entity.atividade.Atividade;
-import br.com.gustavo.espacoKids.entity.horarioAula.HorarioAula;
-import br.com.gustavo.espacoKids.entity.responsavel.Responsavel;
+import br.com.gustavo.espacoKids.domain.dto.alunoDTO.CadastroAlunoDTO;
+import br.com.gustavo.espacoKids.domain.entity.atividade.Atividade;
+import br.com.gustavo.espacoKids.domain.entity.horarioAula.HorarioAula;
+import br.com.gustavo.espacoKids.domain.entity.responsavel.Responsavel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
