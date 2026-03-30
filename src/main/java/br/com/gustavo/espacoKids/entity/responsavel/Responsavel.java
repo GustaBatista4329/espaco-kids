@@ -1,5 +1,6 @@
 package br.com.gustavo.espacoKids.entity.responsavel;
 
+import br.com.gustavo.espacoKids.dto.responsavelDTO.CadastroResponsavelDTO;
 import br.com.gustavo.espacoKids.entity.aluno.Aluno;
 import br.com.gustavo.espacoKids.entity.usuario.Usuario;
 import jakarta.persistence.*;
@@ -31,4 +32,8 @@ public class Responsavel {
     @OneToMany(mappedBy = "responsavel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Aluno> alunos = new ArrayList<>();
 
+    public Responsavel(CadastroResponsavelDTO cadastroResponsavelDTO, Usuario usuario) {
+        this.usuarioId = usuario;
+        this.telefone = cadastroResponsavelDTO.telefone();
+    }
 }

@@ -2,7 +2,8 @@ package br.com.gustavo.espacoKids.entity.usuario;
 
 public enum Perfil {
     PROFESSORA("professora"),
-    RESPONSAVEL("responsavel");
+    RESPONSAVEL("responsavel"),
+    ADM("Administrador");
 
     private String descricao;
 

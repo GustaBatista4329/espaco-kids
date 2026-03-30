@@ -3,10 +3,7 @@ package br.com.gustavo.espacoKids.entity.usuario;
 import br.com.gustavo.espacoKids.dto.usuarioDTO.CadastroUsuarioDTO;
 import br.com.gustavo.espacoKids.entity.responsavel.Responsavel;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(of = "id")
 public class Usuario {
 
