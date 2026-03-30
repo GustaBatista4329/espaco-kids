@@ -37,5 +37,4 @@ public class AlunoController {
         return ResponseEntity.ok(alunoDetalhamento);
 
     }
-
 }

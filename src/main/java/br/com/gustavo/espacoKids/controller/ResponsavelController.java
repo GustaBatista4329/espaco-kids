@@ -28,5 +28,4 @@ public class ResponsavelController {
 
         return ResponseEntity.ok(cadastroResponsavelDTO);
     }
-
 }
