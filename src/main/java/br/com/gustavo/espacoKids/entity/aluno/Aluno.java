@@ -1,5 +1,6 @@
 package br.com.gustavo.espacoKids.entity.aluno;
 
+import br.com.gustavo.espacoKids.dto.alunoDTO.CadastroAlunoDTO;
 import br.com.gustavo.espacoKids.entity.atividade.Atividade;
 import br.com.gustavo.espacoKids.entity.horarioAula.HorarioAula;
 import br.com.gustavo.espacoKids.entity.responsavel.Responsavel;
@@ -50,6 +51,13 @@ public class Aluno {
 
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Atividade>  atividades= new ArrayList<>();
+
+    public Aluno(CadastroAlunoDTO cadastroAlunoDTO, Responsavel responsavel) {
+        this.responsavel = responsavel;
+        this.nome = cadastroAlunoDTO.nome();
+        this.dataNascimento = cadastroAlunoDTO.dataNascimento();
+        this.serie = cadastroAlunoDTO.serie();
+    }
 
     //metodos
     public void adicionarHorario(HorarioAula horario) {
