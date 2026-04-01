@@ -26,7 +26,7 @@ public class Usuario {
     private String nome;
 
     @Column(nullable = false)
-    private String email;
+    private String login;
 
     @Column(nullable = false)
     private String senhaHash;
@@ -42,7 +42,7 @@ public class Usuario {
 
     public Usuario(CadastroUsuarioDTO cadastroUsuarioDTO) {
         this.nome = cadastroUsuarioDTO.nome();
-        this.email = cadastroUsuarioDTO.email();
+        this.login = cadastroUsuarioDTO.login();
         this.senhaHash = cadastroUsuarioDTO.senha_hash();
         this.perfil = cadastroUsuarioDTO.perfil();
     }
