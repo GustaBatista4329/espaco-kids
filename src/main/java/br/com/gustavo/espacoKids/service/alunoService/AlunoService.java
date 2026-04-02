@@ -19,44 +19,26 @@ public class AlunoService {
     private final AlunoRepository alunoRepository;
     private final ResponsavelRepository responsavelRepository;
 
-    public CadastroAlunoDTO cadastrarAlunoDTO(CadastroAlunoDTO cadastroAlunoDTO){
-        var responsavel = responsavelRepository.findById(cadastroAlunoDTO.responsavelId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Esse responsável não está cadastrado"));
+    public AlunoDetalhesDTO cadastrarAluno(CadastroAlunoDTO dto) {
+        var responsavel = responsavelRepository.findById(dto.responsavelId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Responsável não encontrado"));
 
-        var aluno = new Aluno(cadastroAlunoDTO, responsavel);
-        alunoRepository.save(aluno);
-
-        return cadastroAlunoDTO;
+        var aluno = alunoRepository.save(new Aluno(dto, responsavel));
+        return new AlunoDetalhesDTO(aluno);
     }
 
-    public List<AlunoDetalhesDTO> buscarAlunosDoResponsavel(Long responsavelId){
-        var alunos = alunoRepository.findByResponsavelId(responsavelId);
-
-        if(alunos.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Esse responsável não está cadastrado");
+    public List<AlunoDetalhesDTO> buscarAlunosDoResponsavel(Long responsavelId) {
+        if (!responsavelRepository.existsById(responsavelId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Responsável não encontrado");
         }
-
-        List<AlunoDetalhesDTO> alunosDetalhes = alunos.stream()
-                .map(aluno -> new AlunoDetalhesDTO(aluno))
+        return alunoRepository.findByResponsavelId(responsavelId).stream()
+                .map(AlunoDetalhesDTO::new)
                 .toList();
-
-
-        return alunosDetalhes;
     }
 
-    public AlunoDetalhesDTO buscarDetalhesDoAluno(Long responsavelId, Long alunoId){
-        var alunoOptional = alunoRepository.findByIdAndResponsavelId(alunoId, responsavelId);
-
-        if(alunoOptional.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Esse aluno não existe");
-        }
-
-        var aluno = alunoOptional.get();
-
-        var alunoDetalhamento = new AlunoDetalhesDTO(aluno);
-
-        return alunoDetalhamento;
-
+    public AlunoDetalhesDTO buscarDetalhesDoAluno(Long responsavelId, Long alunoId) {
+        var aluno = alunoRepository.findByIdAndResponsavelId(alunoId, responsavelId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aluno não encontrado"));
+        return new AlunoDetalhesDTO(aluno);
     }
-
 }

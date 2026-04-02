@@ -1,0 +1,38 @@
+package br.com.gustavo.espacoKids.infra.config.security;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
+@Service
+public class JwtService {
+
+    @Value("${api.security.token.secret}")
+    private String secret;
+
+    private Algorithm getAlgorithm(){
+        return Algorithm.HMAC256(secret);
+    }
+
+    public String gerarToken(UserDetails usuario) {
+        return JWT.create()
+                .withSubject(usuario.getUsername())
+                .withIssuedAt(Instant.now())
+                .withExpiresAt(Instant.now().plus(2, ChronoUnit.HOURS))
+                .sign(getAlgorithm());
+    }
+
+    public String extrairLogin(String token){
+        return JWT.require(getAlgorithm())
+                .build()
+                .verify(token)
+                .getSubject();
+    }
+
+}

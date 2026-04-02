@@ -11,12 +11,7 @@ public enum Perfil {
         this.descricao = descricao;
     }
 
-    public static Perfil fromString(String text) {
-        for (Perfil perfil : Perfil.values()) {
-            if (perfil.descricao.equalsIgnoreCase(text)) {
-                return perfil;
-            }
-        }
-        throw new IllegalArgumentException("Nenhuma categoria encontrada para a string fornecida: " + text);
+    public String toAuthority() {
+        return "ROLE_" + this.name();
     }
 }

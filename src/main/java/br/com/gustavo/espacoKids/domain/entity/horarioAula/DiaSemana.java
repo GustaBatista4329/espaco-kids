@@ -6,7 +6,7 @@ public enum DiaSemana {
     QUA("Quarta"),
     QUI("Quinta"),
     SEX("Sexta"),
-    SAB("Sabádo");
+    SAB("Sábado");
 
     private String descricao;
 
