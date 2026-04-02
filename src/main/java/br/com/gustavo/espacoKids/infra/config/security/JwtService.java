@@ -1,5 +1,6 @@
 package br.com.gustavo.espacoKids.infra.config.security;
 
+import br.com.gustavo.espacoKids.domain.entity.usuario.Usuario;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,12 +21,18 @@ public class JwtService {
         return Algorithm.HMAC256(secret);
     }
 
-    public String gerarToken(UserDetails usuario) {
-        return JWT.create()
+    public String gerarToken(UserDetails userDetails) {
+        Usuario usuario = (Usuario) userDetails;
+        var builder = JWT.create()
                 .withSubject(usuario.getUsername())
+                .withClaim("perfil", usuario.getPerfil().name())
+                .withClaim("userId", usuario.getId())
                 .withIssuedAt(Instant.now())
-                .withExpiresAt(Instant.now().plus(2, ChronoUnit.HOURS))
-                .sign(getAlgorithm());
+                .withExpiresAt(Instant.now().plus(2, ChronoUnit.HOURS));
+        if (usuario.getResponsavel() != null) {
+            builder.withClaim("responsavelId", usuario.getResponsavel().getId());
+        }
+        return builder.sign(getAlgorithm());
     }
 
     public String extrairLogin(String token){
