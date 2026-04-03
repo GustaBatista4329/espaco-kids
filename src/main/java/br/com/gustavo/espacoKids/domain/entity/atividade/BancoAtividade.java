@@ -1,40 +1,30 @@
 package br.com.gustavo.espacoKids.domain.entity.atividade;
 
-import br.com.gustavo.espacoKids.domain.entity.aluno.Aluno;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "atividades")
+@Table(name = "banco_atividades")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-public class Atividade {
+public class BancoAtividade {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "aluno_id")
-    private Aluno aluno;
 
     @Column(nullable = false)
     private String titulo;
 
     private String descricao;
 
-    @Column(nullable = false)
-    private String arquivoUrl;
-
-    @Column(nullable = false)
-    private LocalDate dataDisponibilizacao;
+    @Column(nullable = false, unique = true)
+    private String nomeArquivo;
 
     @Column(name = "criado_em", nullable = false, insertable = false, updatable = false)
     private LocalDateTime criadoEm;
-
 }

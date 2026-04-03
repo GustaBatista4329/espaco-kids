@@ -1,7 +1,7 @@
 package br.com.gustavo.espacoKids.domain.entity.aluno;
 
 import br.com.gustavo.espacoKids.domain.dto.alunoDTO.CadastroAlunoDTO;
-import br.com.gustavo.espacoKids.domain.entity.atividade.Atividade;
+import br.com.gustavo.espacoKids.domain.entity.atividade.AtividadeAluno;
 import br.com.gustavo.espacoKids.domain.entity.horarioAula.HorarioAula;
 import br.com.gustavo.espacoKids.domain.entity.responsavel.Responsavel;
 import jakarta.persistence.*;
@@ -49,8 +49,8 @@ public class Aluno {
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<HorarioAula> horarioAulas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Atividade>  atividades= new ArrayList<>();
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
+    private List<AtividadeAluno> atividadesAluno = new ArrayList<>();
 
     public Aluno(CadastroAlunoDTO cadastroAlunoDTO, Responsavel responsavel) {
         this.responsavel = responsavel;
@@ -59,14 +59,8 @@ public class Aluno {
         this.serie = cadastroAlunoDTO.serie();
     }
 
-    //metodos
     public void adicionarHorario(HorarioAula horario) {
         this.horarioAulas.add(horario);
         horario.setAluno(this);
-    }
-
-    public void adicionarAtividade(Atividade atividade) {
-        this.atividades.add(atividade);
-        atividade.setAluno(this);
     }
 }
