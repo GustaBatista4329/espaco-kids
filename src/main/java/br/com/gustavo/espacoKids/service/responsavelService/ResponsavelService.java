@@ -2,6 +2,7 @@ package br.com.gustavo.espacoKids.service.responsavelService;
 
 import br.com.gustavo.espacoKids.domain.dto.responsavelDTO.CadastroResponsavelDTO;
 import br.com.gustavo.espacoKids.domain.dto.responsavelDTO.ResponsavelDetalhesDTO;
+import br.com.gustavo.espacoKids.domain.dto.responsavelDTO.UsuarioDisponivelDTO;
 import br.com.gustavo.espacoKids.domain.entity.responsavel.Responsavel;
 import br.com.gustavo.espacoKids.domain.entity.usuario.Perfil;
 import br.com.gustavo.espacoKids.repository.ResponsavelRepository;
@@ -35,6 +36,11 @@ public class ResponsavelService {
     public List<ResponsavelDetalhesDTO> listarTodosResponsaveis() {
         return responsavelRepository.findAll().stream()
                 .map(ResponsavelDetalhesDTO::new)
+                .toList();
+    }
+    public List<UsuarioDisponivelDTO> listarUsuariosDisponiveis() {
+        return responsavelRepository.findUsuariosResponsaveisSemVinculo().stream()
+                .map(UsuarioDisponivelDTO::new)
                 .toList();
     }
 }

@@ -2,6 +2,7 @@ package br.com.gustavo.espacoKids.controller;
 
 import br.com.gustavo.espacoKids.domain.dto.responsavelDTO.CadastroResponsavelDTO;
 import br.com.gustavo.espacoKids.domain.dto.responsavelDTO.ResponsavelDetalhesDTO;
+import br.com.gustavo.espacoKids.domain.dto.responsavelDTO.UsuarioDisponivelDTO;
 import br.com.gustavo.espacoKids.service.responsavelService.ResponsavelService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,11 @@ public class ResponsavelController {
                 .buildAndExpand(responsavel.id())
                 .toUri();
         return ResponseEntity.created(uri).body(responsavel);
+    }
+
+    @GetMapping("/usuarios-disponiveis")
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<List<UsuarioDisponivelDTO>> listarUsuariosDisponiveis() {
+        return ResponseEntity.ok(service.listarUsuariosDisponiveis());
     }
 }
