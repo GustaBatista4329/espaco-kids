@@ -39,7 +39,7 @@ public class ResponsavelService {
                 .toList();
     }
     public List<UsuarioDisponivelDTO> listarUsuariosDisponiveis() {
-        return responsavelRepository.findUsuariosResponsaveisSemVinculo().stream()
+        return usuarioRepository.findUsuariosResponsaveisSemVinculo().stream()
                 .map(UsuarioDisponivelDTO::new)
                 .toList();
     }

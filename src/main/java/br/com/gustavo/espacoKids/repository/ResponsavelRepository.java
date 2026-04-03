@@ -8,6 +8,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ResponsavelRepository extends JpaRepository<Responsavel, Long> {
-    @Query("SELECT u FROM Usuario u WHERE u.perfil = 'RESPONSAVEL' AND u.responsavel IS NULL AND u.ativo = true")
-    List<Usuario> findUsuariosResponsaveisSemVinculo();
+
 }
