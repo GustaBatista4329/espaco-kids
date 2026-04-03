@@ -28,4 +28,6 @@ public class AtividadeAluno {
 
     @Column(name = "data_atribuicao", nullable = false, insertable = false, updatable = false)
     private LocalDateTime dataAtribuicao;
+
+    private String enunciado;
 }

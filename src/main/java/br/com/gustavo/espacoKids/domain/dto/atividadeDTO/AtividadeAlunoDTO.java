@@ -5,7 +5,7 @@ import br.com.gustavo.espacoKids.domain.entity.atividade.AtividadeAluno;
 import java.time.LocalDateTime;
 
 public record AtividadeAlunoDTO(Long id, Long bancoAtividadeId, String titulo, String descricao,
-                                String nomeArquivo, LocalDateTime dataAtribuicao) {
+                                String nomeArquivo, LocalDateTime dataAtribuicao, String enunciado) {
     public AtividadeAlunoDTO(AtividadeAluno atividadeAluno) {
         this(
                 atividadeAluno.getId(),
@@ -13,7 +13,8 @@ public record AtividadeAlunoDTO(Long id, Long bancoAtividadeId, String titulo, S
                 atividadeAluno.getBancoAtividade().getTitulo(),
                 atividadeAluno.getBancoAtividade().getDescricao(),
                 atividadeAluno.getBancoAtividade().getNomeArquivo(),
-                atividadeAluno.getDataAtribuicao()
+                atividadeAluno.getDataAtribuicao(),
+                atividadeAluno.getEnunciado()
         );
     }
 }

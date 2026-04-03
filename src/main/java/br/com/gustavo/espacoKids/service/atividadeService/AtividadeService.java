@@ -90,14 +90,13 @@ public class AtividadeService {
         var atividadeAluno = new AtividadeAluno();
         atividadeAluno.setBancoAtividade(bancoAtividade);
         atividadeAluno.setAluno(aluno);
+        atividadeAluno.setEnunciado(dto.enunciado());
 
         return new AtividadeAlunoDTO(atividadeAlunoRepository.save(atividadeAluno));
     }
 
     public List<AtividadeAlunoDTO> listarAtividadesDoAluno(Long alunoId) {
-        LocalDateTime agora = LocalDateTime.now();
-        return atividadeAlunoRepository.findByAlunoId(alunoId).stream()
-                .filter(a -> a.getDataAtribuicao().plusDays(7).isAfter(agora))
+        return atividadeAlunoRepository.findByAlunoIdOrderByDataAtribuicaoDesc(alunoId).stream()
                 .map(AtividadeAlunoDTO::new)
                 .toList();
     }
@@ -109,8 +108,4 @@ public class AtividadeService {
         atividadeAlunoRepository.deleteById(id);
     }
 
-    @Transactional
-    public void removerAtividadesExpiradas() {
-        atividadeAlunoRepository.deleteByDataAtribuicaoBefore(LocalDateTime.now().minusDays(7));
-    }
 }
