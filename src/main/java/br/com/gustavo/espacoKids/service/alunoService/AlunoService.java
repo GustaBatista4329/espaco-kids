@@ -19,6 +19,12 @@ public class AlunoService {
     private final AlunoRepository alunoRepository;
     private final ResponsavelRepository responsavelRepository;
 
+    public List<AlunoDetalhesDTO> listarTodosAlunos() {
+        return alunoRepository.findAll().stream()
+                .map(AlunoDetalhesDTO::new)
+                .toList();
+    }
+
     public AlunoDetalhesDTO cadastrarAluno(CadastroAlunoDTO dto) {
         var responsavel = responsavelRepository.findById(dto.responsavelId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Responsável não encontrado"));

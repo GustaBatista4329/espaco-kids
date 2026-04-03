@@ -1,5 +1,6 @@
 package br.com.gustavo.espacoKids.controller;
 
+import br.com.gustavo.espacoKids.domain.dto.usuarioDTO.AtualizarSenhaDTO;
 import br.com.gustavo.espacoKids.domain.dto.usuarioDTO.CadastroUsuarioDTO;
 import br.com.gustavo.espacoKids.domain.dto.usuarioDTO.LoginRequestDTO;
 import br.com.gustavo.espacoKids.domain.dto.usuarioDTO.LoginResponseDTO;
@@ -13,10 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
@@ -47,5 +45,12 @@ public class AutenticacaoController {
 
         var uri = uriBuilder.path("/autenticacao/cadastro/{id}").buildAndExpand(novo.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/senha")
+    @PreAuthorize("hasRole('ADM')")
+    public ResponseEntity<Void> atualizarSenha(@RequestBody @Valid AtualizarSenhaDTO dto) {
+        usuarioService.atualizarSenha(dto);
+        return ResponseEntity.noContent().build();
     }
 }

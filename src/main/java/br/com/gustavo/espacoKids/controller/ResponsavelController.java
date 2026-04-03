@@ -21,6 +21,7 @@ public class ResponsavelController {
     private final ResponsavelService service;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADM', 'PROFESSORA')")
     public ResponseEntity<List<ResponsavelDetalhesDTO>> listarTodosResponsaveis() {
         return ResponseEntity.ok(service.listarTodosResponsaveis());
     }

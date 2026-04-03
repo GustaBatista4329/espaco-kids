@@ -1,14 +1,18 @@
 package br.com.gustavo.espacoKids.service.usuarioService;
 
+import br.com.gustavo.espacoKids.domain.dto.usuarioDTO.AtualizarSenhaDTO;
 import br.com.gustavo.espacoKids.domain.dto.usuarioDTO.CadastroUsuarioDTO;
 import br.com.gustavo.espacoKids.domain.entity.usuario.Usuario;
 import br.com.gustavo.espacoKids.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 
 @Service @RequiredArgsConstructor
 public class UsuarioService implements UserDetailsService {
@@ -35,5 +39,13 @@ public class UsuarioService implements UserDetailsService {
         usuario.setAtivo(true);
 
         return repository.save(usuario);
+    }
+
+    public void atualizarSenha(AtualizarSenhaDTO dto) {
+        var usuario = repository.findById(dto.usuarioId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+
+        usuario.setSenhaHash(encriptador.encode(dto.novaSenha()));
+        repository.save(usuario);
     }
 }

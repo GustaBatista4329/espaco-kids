@@ -19,6 +19,12 @@ public class AlunoController {
 
     private final AlunoService service;
 
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADM', 'PROFESSORA')")
+    public ResponseEntity<List<AlunoDetalhesDTO>> listarTodosAlunos() {
+        return ResponseEntity.ok(service.listarTodosAlunos());
+    }
+
     @PreAuthorize("hasRole('ADM')")
     @PostMapping
     public ResponseEntity<AlunoDetalhesDTO> cadastrarAluno(@RequestBody @Valid CadastroAlunoDTO dto) {
