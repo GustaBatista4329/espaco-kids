@@ -35,6 +35,13 @@ public class SecurityConfig {
                         .requestMatchers("/autenticacao/login").permitAll()
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(401);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"mensagem\":\"Token expirado ou inválido\"}");
+                        })
+                )
                 .cors(cors -> cors.configurationSource(corsConfig()))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
