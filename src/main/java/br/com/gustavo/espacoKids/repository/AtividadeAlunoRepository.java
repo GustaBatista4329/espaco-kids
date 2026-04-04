@@ -9,9 +9,7 @@ import java.util.List;
 public interface AtividadeAlunoRepository extends JpaRepository<AtividadeAluno, Long> {
     List<AtividadeAluno> findByAlunoId(Long alunoId);
     List<AtividadeAluno> findByAlunoIdOrderByDataAtribuicaoDesc(Long alunoId);
-
     boolean existsByBancoAtividadeIdAndAlunoId(Long bancoAtividadeId, Long alunoId);
-
     @Transactional
     void deleteByBancoAtividadeId(Long bancoAtividadeId);
 }
