@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.gustavo.espacoKids.domain.entity.atividade.Categoria;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/atividade")
@@ -33,8 +36,9 @@ public class AtividadeController {
     @PreAuthorize("hasAnyRole('ADM', 'PROFESSORA')")
     public ResponseEntity<BancoAtividadeDTO> upload(@RequestParam("titulo") String titulo,
                                                     @RequestParam(value = "descricao", required = false) String descricao,
+                                                    @RequestParam("categoria") String categoria,
                                                     @RequestParam("arquivo") MultipartFile arquivo) {
-        var dto = service.uploadAtividade(titulo, descricao, arquivo);
+        var dto = service.uploadAtividade(titulo, descricao, categoria, arquivo);
         var uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .replacePath("/atividade/banco/{id}")
                 .buildAndExpand(dto.id())
@@ -76,6 +80,15 @@ public class AtividadeController {
     @GetMapping("/aluno/{alunoId}")
     public ResponseEntity<List<AtividadeAlunoDTO>> listarAtividadesDoAluno(@PathVariable Long alunoId) {
         return ResponseEntity.ok(service.listarAtividadesDoAluno(alunoId));
+    }
+
+    @GetMapping("/categorias")
+    @PreAuthorize("hasAnyRole('ADM', 'PROFESSORA')")
+    public ResponseEntity<List<Map<String, String>>> listarCategorias() {
+        var categorias = Arrays.stream(Categoria.values())
+                .map(c -> Map.of("value", c.name(), "label", c.getDescricao()))
+                .toList();
+        return ResponseEntity.ok(categorias);
     }
 
     @GetMapping("/download/{nomeArquivo}")

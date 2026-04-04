@@ -25,6 +25,10 @@ public class BancoAtividade {
     @Column(nullable = false, unique = true)
     private String nomeArquivo;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria = Categoria.GERAL;
+
     @Column(name = "criado_em", nullable = false, insertable = false, updatable = false)
     private LocalDateTime criadoEm;
 }

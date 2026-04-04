@@ -1,0 +1,1 @@
+ALTER TABLE banco_atividades ADD COLUMN categoria VARCHAR(50) NOT NULL DEFAULT 'GERAL';

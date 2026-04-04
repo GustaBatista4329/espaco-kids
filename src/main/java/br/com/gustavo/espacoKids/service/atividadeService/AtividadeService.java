@@ -5,6 +5,7 @@ import br.com.gustavo.espacoKids.domain.dto.atividadeDTO.AtribuirAtividadeDTO;
 import br.com.gustavo.espacoKids.domain.dto.atividadeDTO.BancoAtividadeDTO;
 import br.com.gustavo.espacoKids.domain.entity.atividade.AtividadeAluno;
 import br.com.gustavo.espacoKids.domain.entity.atividade.BancoAtividade;
+import br.com.gustavo.espacoKids.domain.entity.atividade.Categoria;
 import br.com.gustavo.espacoKids.repository.AlunoRepository;
 import br.com.gustavo.espacoKids.repository.AtividadeAlunoRepository;
 import br.com.gustavo.espacoKids.repository.BancoAtividadeRepository;
@@ -31,9 +32,16 @@ public class AtividadeService {
     private final AlunoRepository alunoRepository;
     private final Path atividadesUploadPath;
 
-    public BancoAtividadeDTO uploadAtividade(String titulo, String descricao, MultipartFile arquivo) {
+    public BancoAtividadeDTO uploadAtividade(String titulo, String descricao, String categoria, MultipartFile arquivo) {
         if (arquivo.isEmpty() || !"application/pdf".equals(arquivo.getContentType())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O arquivo deve ser um PDF válido");
+        }
+
+        Categoria cat;
+        try {
+            cat = Categoria.valueOf(categoria.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoria inválida: " + categoria);
         }
 
         String nomeArquivo = UUID.randomUUID() + "_" + arquivo.getOriginalFilename();
@@ -48,6 +56,7 @@ public class AtividadeService {
         var bancoAtividade = new BancoAtividade();
         bancoAtividade.setTitulo(titulo);
         bancoAtividade.setDescricao(descricao);
+        bancoAtividade.setCategoria(cat);
         bancoAtividade.setNomeArquivo(nomeArquivo);
 
         return new BancoAtividadeDTO(bancoAtividadeRepository.save(bancoAtividade));
