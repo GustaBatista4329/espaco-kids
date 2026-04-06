@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -33,8 +34,21 @@ public class AtividadeService {
     private final Path atividadesUploadPath;
 
     public BancoAtividadeDTO uploadAtividade(String titulo, String descricao, String categoria, MultipartFile arquivo) {
-        if (arquivo.isEmpty() || !"application/pdf".equals(arquivo.getContentType())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O arquivo deve ser um PDF válido");
+        Map<String, String> TIPOS_PERMITIDOS = Map.of(
+            "application/pdf", "pdf",
+            "application/msword", "doc",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "docx",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation", "pptx",
+            "image/jpeg", "jpeg",
+            "image/png", "png"
+        );
+
+        String contentType = arquivo.getContentType();
+        String tipoArquivo = TIPOS_PERMITIDOS.get(contentType);
+
+        if (arquivo.isEmpty() || tipoArquivo == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Tipo de arquivo não suportado. Aceitos: PDF, DOC, DOCX, PPTX, JPEG, PNG");
         }
 
         Categoria cat;
@@ -58,6 +72,7 @@ public class AtividadeService {
         bancoAtividade.setDescricao(descricao);
         bancoAtividade.setCategoria(cat);
         bancoAtividade.setNomeArquivo(nomeArquivo);
+        bancoAtividade.setTipoArquivo(tipoArquivo);
 
         return new BancoAtividadeDTO(bancoAtividadeRepository.save(bancoAtividade));
     }

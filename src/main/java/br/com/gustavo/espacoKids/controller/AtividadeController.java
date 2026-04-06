@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -91,6 +92,16 @@ public class AtividadeController {
         return ResponseEntity.ok(categorias);
     }
 
+    private static final Map<String, MediaType> MEDIA_TYPES = Map.of(
+            "pdf", MediaType.APPLICATION_PDF,
+            "doc", MediaType.valueOf("application/msword"),
+            "docx", MediaType.valueOf("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+            "pptx", MediaType.valueOf("application/vnd.openxmlformats-officedocument.presentationml.presentation"),
+            "jpeg", MediaType.IMAGE_JPEG,
+            "jpg", MediaType.IMAGE_JPEG,
+            "png", MediaType.IMAGE_PNG
+    );
+
     @GetMapping("/download/{nomeArquivo}")
     public ResponseEntity<Resource> download(@PathVariable String nomeArquivo) throws MalformedURLException {
         Path arquivo = atividadesUploadPath.resolve(nomeArquivo).normalize();
@@ -100,9 +111,18 @@ public class AtividadeController {
             return ResponseEntity.notFound().build();
         }
 
+        String ext = nomeArquivo.contains(".")
+                ? nomeArquivo.substring(nomeArquivo.lastIndexOf('.') + 1).toLowerCase()
+                : "pdf";
+        MediaType mediaType = MEDIA_TYPES.getOrDefault(ext, MediaType.APPLICATION_OCTET_STREAM);
+
         return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_PDF)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + nomeArquivo + "\"")
+                .contentType(mediaType)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename(nomeArquivo, java.nio.charset.StandardCharsets.UTF_8)
+                                .build()
+                                .toString())
                 .body(resource);
     }
 }

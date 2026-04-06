@@ -26,6 +26,9 @@ public class BancoAtividade {
     private String nomeArquivo;
 
     @Column(nullable = false)
+    private String tipoArquivo;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Categoria categoria = Categoria.GERAL;
 
