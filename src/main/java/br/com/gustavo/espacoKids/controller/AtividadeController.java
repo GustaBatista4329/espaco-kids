@@ -18,12 +18,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.gustavo.espacoKids.domain.entity.atividade.Categoria;
+import br.com.gustavo.espacoKids.domain.entity.usuario.Perfil;
+import br.com.gustavo.espacoKids.domain.entity.usuario.Usuario;
+import br.com.gustavo.espacoKids.repository.AlunoRepository;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @RestController
 @RequestMapping("/atividade")
@@ -32,6 +37,7 @@ public class AtividadeController {
 
     private final AtividadeService service;
     private final Path atividadesUploadPath;
+    private final AlunoRepository alunoRepository;
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('ADM', 'PROFESSORA')")
@@ -79,7 +85,13 @@ public class AtividadeController {
     }
 
     @GetMapping("/aluno/{alunoId}")
-    public ResponseEntity<List<AtividadeAlunoDTO>> listarAtividadesDoAluno(@PathVariable Long alunoId) {
+    public ResponseEntity<List<AtividadeAlunoDTO>> listarAtividadesDoAluno(
+            @PathVariable Long alunoId,
+            @AuthenticationPrincipal Usuario usuario) {
+        if (usuario.getPerfil() == Perfil.RESPONSAVEL
+                && alunoRepository.findByIdAndResponsavelId(alunoId, usuario.getResponsavel().getId()).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return ResponseEntity.ok(service.listarAtividadesDoAluno(alunoId));
     }
 
@@ -105,6 +117,11 @@ public class AtividadeController {
     @GetMapping("/download/{nomeArquivo}")
     public ResponseEntity<Resource> download(@PathVariable String nomeArquivo) throws MalformedURLException {
         Path arquivo = atividadesUploadPath.resolve(nomeArquivo).normalize();
+
+        if (!arquivo.startsWith(atividadesUploadPath)) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Resource resource = new UrlResource(arquivo.toUri());
 
         if (!resource.exists() || !resource.isReadable()) {

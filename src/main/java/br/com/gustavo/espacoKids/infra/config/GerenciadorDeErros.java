@@ -1,4 +1,4 @@
-package br.com.gustavo.espacoKids.infra.config.erros;
+package br.com.gustavo.espacoKids.infra.config;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

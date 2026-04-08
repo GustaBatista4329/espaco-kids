@@ -1,4 +1,4 @@
-package br.com.gustavo.espacoKids.infra.config.storage;
+package br.com.gustavo.espacoKids.infra.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

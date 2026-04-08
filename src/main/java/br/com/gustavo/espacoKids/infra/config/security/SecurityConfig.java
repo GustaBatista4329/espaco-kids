@@ -1,6 +1,7 @@
 package br.com.gustavo.espacoKids.infra.config.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,9 @@ public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
 
+    @Value("${app.cors.allowed-origins:http://localhost:5173,http://localhost:3000}")
+    private String allowedOrigins;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -32,7 +36,9 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/autenticacao/login").permitAll()
+                        .requestMatchers("/autenticacao/login", "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex
@@ -55,8 +61,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfig() {
         CorsConfiguration c = new CorsConfiguration();
-        c.setAllowedOrigins(List.of("http://localhost:5173","http://localhost:3000"));
-        c.setAllowedMethods(List.of("GET","POST","PUT", "PATCH", "DELETE","OPTIONS"));
+        c.setAllowedOrigins(List.of(allowedOrigins.split(",")));
+        c.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         c.setAllowedHeaders(List.of("*"));
         c.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource src = new UrlBasedCorsConfigurationSource();

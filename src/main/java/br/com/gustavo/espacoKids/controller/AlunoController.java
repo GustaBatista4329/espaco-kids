@@ -3,10 +3,14 @@ package br.com.gustavo.espacoKids.controller;
 import br.com.gustavo.espacoKids.domain.dto.alunoDTO.AlunoDetalhesDTO;
 import br.com.gustavo.espacoKids.domain.dto.alunoDTO.CadastroAlunoDTO;
 import br.com.gustavo.espacoKids.service.alunoService.AlunoService;
+import br.com.gustavo.espacoKids.domain.entity.usuario.Perfil;
+import br.com.gustavo.espacoKids.domain.entity.usuario.Usuario;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -37,12 +41,25 @@ public class AlunoController {
     }
 
     @GetMapping("/{responsavelId}")
-    public ResponseEntity<List<AlunoDetalhesDTO>> buscarAlunosDoResponsavel(@PathVariable Long responsavelId) {
+    public ResponseEntity<List<AlunoDetalhesDTO>> buscarAlunosDoResponsavel(
+            @PathVariable Long responsavelId,
+            @AuthenticationPrincipal Usuario usuario) {
+        if (usuario.getPerfil() == Perfil.RESPONSAVEL
+                && !usuario.getResponsavel().getId().equals(responsavelId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return ResponseEntity.ok(service.buscarAlunosDoResponsavel(responsavelId));
     }
 
     @GetMapping("/{responsavelId}/{alunoId}")
-    public ResponseEntity<AlunoDetalhesDTO> buscarDetalhesDoAluno(@PathVariable Long responsavelId, @PathVariable Long alunoId) {
+    public ResponseEntity<AlunoDetalhesDTO> buscarDetalhesDoAluno(
+            @PathVariable Long responsavelId,
+            @PathVariable Long alunoId,
+            @AuthenticationPrincipal Usuario usuario) {
+        if (usuario.getPerfil() == Perfil.RESPONSAVEL
+                && !usuario.getResponsavel().getId().equals(responsavelId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return ResponseEntity.ok(service.buscarDetalhesDoAluno(responsavelId, alunoId));
     }
 }

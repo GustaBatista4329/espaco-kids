@@ -11,6 +11,7 @@ import br.com.gustavo.espacoKids.domain.dto.usuarioDTO.UsuarioSelectDTO;
 import br.com.gustavo.espacoKids.domain.entity.usuario.Usuario;
 import br.com.gustavo.espacoKids.infra.config.security.JwtService;
 import br.com.gustavo.espacoKids.service.usuarioService.UsuarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ public class AutenticacaoController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/login")
+    @SecurityRequirements
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO dto) {
         var authToken = new UsernamePasswordAuthenticationToken(dto.login(), dto.senha());
         var authentication = authenticationManager.authenticate(authToken); // lança exceção se inválido
